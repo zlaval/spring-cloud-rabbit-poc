@@ -19,11 +19,11 @@ spring:
           producer:
             bindQueue: false
             declareExchange: false
-            routing-key-expression: "'routingKey'"
+            routing-key-expression: "'update_message'"
     bindings:
       outputChannel:
-        destination: topic.update-exchange
+        destination: topic.update.message
         binder: rabbit
       inputChannel:
-        group: update-queue
+        group: queue.update.message
         binder: rabbit

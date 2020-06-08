@@ -1,0 +1,56 @@
+{
+  "users": [
+    {
+      "name": "pi",
+      "password_hash": "UQA3L0kusm/n8yf6tfSvtJoLhxvm/Mbg19rQwk61Utxzj+Jw",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "pi",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "queues": [
+    {
+      "name": "queue.update.message",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "topic.update.message",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "topic.update.message",
+      "vhost": "/",
+      "destination": "queue.update.message",
+      "destination_type": "queue",
+      "routing_key": "update_message",
+      "arguments": {}
+    }
+  ]
+}
