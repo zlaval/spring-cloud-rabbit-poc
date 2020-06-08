@@ -1,0 +1,29 @@
+server:
+  port: ${SERVER_PORT:8000}
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: pi
+    password: pipass
+  cloud.stream:
+    rabbit:
+      bindings:
+        inputChannel:
+          consumer:
+            bindQueue: false
+            declareExchange: false
+            missingQueuesFatal: true
+            queueNameGroupOnly: true
+        outputChannel:
+          producer:
+            bindQueue: false
+            declareExchange: false
+            routing-key-expression: "'routingKey'"
+    bindings:
+      outputChannel:
+        destination: topic.update-exchange
+        binder: rabbit
+      inputChannel:
+        group: update-queue
+        binder: rabbit
