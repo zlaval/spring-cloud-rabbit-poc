@@ -11,19 +11,20 @@ spring:
       bindings:
         inputChannel:
           consumer:
-            bindQueue: false
-            declareExchange: false
             missingQueuesFatal: true
-            queueNameGroupOnly: true
+            bindingRoutingKey: data_change
+            exchangeAutoDelete: false
         outputChannel:
           producer:
-            bindQueue: false
-            declareExchange: false
-            routing-key-expression: "'update_message'"
+            bindingRoutingKey: data_change
+            routing-key-expression: "'data_change'"
+            exchangeAutoDelete: false
     bindings:
       outputChannel:
-        destination: topic.update.message
+        requiredGroups: consumer_group
+        destination: update.message.exchange
         binder: rabbit
       inputChannel:
-        group: queue.update.message
+        group: consumer_group
+        destination: update.message.exchange
         binder: rabbit
